@@ -19,6 +19,7 @@ void ConsoleManager::addNewCreature(Creature *creature) {
 }
 
 ConsoleManager::ConsoleManager() {
+
     Garden::food=50;
     //CreateRooms
     ConsoleManager::roomList.push_back(new Kitchen());
@@ -45,7 +46,13 @@ ConsoleManager::ConsoleManager() {
 
 void ConsoleManager::BeginSurvival() {
     ConsoleManager::survivalIsActive=true;
+    for(int i=0;i<ConsoleManager::creatureList.size();i++)
+    {
+        ConsoleManager::creatureList[i]->beginSurvival();
+    }
     timeThread=thread(&ConsoleManager::TimeIsPassing,this);
+    escapeThread=std::thread(&ConsoleManager::EscapeListen,this);
+
 
 }
 
@@ -140,6 +147,17 @@ void ConsoleManager::printAllCreatures() {
         if(creatureList[i]->isAlive) {
             move(creatureList[i]->y, creatureList[i]->x);
             addch(creatureList[i]->symbol);
+        }
+    }
+
+}
+
+void ConsoleManager::EscapeListen() {
+    while(ConsoleManager::survivalIsActive)
+    {
+        if(getch()=='q')
+        {
+            ConsoleManager::survivalIsActive=false;
         }
     }
 

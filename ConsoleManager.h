@@ -14,11 +14,14 @@ class Creature;
 class ConsoleManager {
 private:
 
-    thread timeThread;
+
     void printAllRooms();
     void printAllCreatures();
     void printCorridors();
+    void EscapeListen();
 public:
+    thread timeThread;
+    thread escapeThread;
     ConsoleManager();
     static vector<Creature*> creatureList;
     static vector<Room*> roomList;

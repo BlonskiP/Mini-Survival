@@ -42,7 +42,7 @@ public:
     bool isAlive;
     void setRoom(Room *room);
     void Survive();
-    void print();
+    void beginSurvival();
     Room * getRoom();
 
 

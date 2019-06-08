@@ -52,7 +52,6 @@ Creature::Creature(string name, char symbol) {
     energy=50;
     x=25;
     y=10;
-    creatureThread=thread(&Creature::Survive,this);
     Room *& newRoom=ConsoleManager::roomList[0];
     setRoom(newRoom);
 
@@ -60,7 +59,7 @@ Creature::Creature(string name, char symbol) {
 }
 
 void Creature::Survive() {
-    while(isAlive){
+    while(isAlive && ConsoleManager::survivalIsActive){
         for(int i=0;i<ConsoleManager::roomList.size();i++){
             ConsoleManager::roomList[i]->Use(this);
         }
@@ -83,6 +82,10 @@ int Creature::getProgress() {
 void Creature::setProgress(int prog) {
     std::unique_lock<std::mutex> lck(statsAcces);
     progress=prog;
+}
+
+void Creature::beginSurvival() {
+    creatureThread=thread(&Creature::Survive,this);
 }
 
 
