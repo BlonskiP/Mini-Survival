@@ -7,20 +7,26 @@
 #include <vector>
 #include "Creature.h"
 #include "Room.h"
-
+#include <ncurses.h>
 using namespace std;
 class Creature;
 
 class ConsoleManager {
 private:
-    vector<Creature*> creatureList;
-    vector<Room*> roomList;
-public:
-    void addNewCreature(Creature *creature);
-    void printCreatureStats();
+
+    thread timeThread;
     void printAllRooms();
     void printAllCreatures();
-
+public:
+    ConsoleManager();
+    static vector<Creature*> creatureList;
+    static vector<Room*> roomList;
+    static bool survivalIsActive;
+    void addNewCreature(Creature *creature);
+    void printCreatureStats();
+    void reprint();
+    void TimeIsPassing();
+    void BeginSurvival();
 };
 
 

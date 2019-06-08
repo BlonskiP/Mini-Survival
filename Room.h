@@ -13,13 +13,13 @@ using namespace std;
 class Creature;
 class Room {
 private:
-    vector<Creature*> creatureList;
 public:
     Room();
+    string roomName="MissingName";
     mutex RoomAcces;
-    bool Use(Creature *creature);
-    void addNewCreature(Creature *creature);
-
+    condition_variable accesed;
+    unique_lock<mutex> *lck;
+    virtual bool Use(Creature *creature);
     virtual void RoomEfect(Creature *creature) = 0;
     void print();
 };

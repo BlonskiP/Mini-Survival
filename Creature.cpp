@@ -4,32 +4,42 @@
 
 #include <iostream>
 #include "Creature.h"
+#include "ConsoleManager.h"
+
 using namespace std;
 
 int Creature::getHunger() {
+    std::unique_lock<std::mutex> lck(statsAcces);
     return this->hunger;
 }
 
 int Creature::getEnergy() {
+    std::unique_lock<std::mutex> lck(statsAcces);
     return this->energy;
 }
 
 void Creature::changeHungerBy(int change) {
-    this->hunger+=change;
-    if(hunger>maxHunger)hunger=maxHunger;
-
+    if(isAlive) {
+        std::unique_lock<std::mutex> lck(statsAcces);
+        this->hunger += change;
+        if (hunger > maxHunger)hunger = maxHunger;
+    }
 }
 
 void Creature::changeEnergyBy(int change) {
-
-    this->energy+=change;
-    if(energy>maxEnergy)energy=maxEnergy;
-
+    if(isAlive) {
+        std::unique_lock<std::mutex> lck(statsAcces);
+        this->energy += change;
+        if (energy > maxEnergy)energy = maxEnergy;
+    }
 }
 
 bool Creature::CheckIfIsAlive() {
-    if(this->energy<0 || this->hunger<0 )
-        isAlive=false;
+    std::unique_lock<std::mutex> lck(statsAcces);
+    if(this->energy<0 || this->hunger<0 ) {
+        isAlive = false;
+    }
+
     return isAlive;
 }
 
@@ -37,16 +47,39 @@ Creature::Creature(string name) {
 
     isAlive=true;
     this->name=name;
-    hunger=100;
-    energy=100;
+    hunger=50;
+    energy=50;
     creatureThread=thread(&Creature::Survive,this);
+    Room *& newRoom=ConsoleManager::roomList[0];
+    setRoom(newRoom);
 
 
 }
 
 void Creature::Survive() {
     while(isAlive){
-        cout<<"I'm alive";
+        for(int i=0;i<ConsoleManager::roomList.size();i++){
+            ConsoleManager::roomList[i]->Use(this);
+        }
     }
 }
+
+Room * Creature::getRoom() {
+    return this->room;
+}
+
+void Creature::setRoom(Room * room) {
+    this->room = room;
+}
+
+int Creature::getProgress() {
+    std::unique_lock<std::mutex> lck(statsAcces);
+    return progress;
+}
+
+void Creature::setProgress(int prog) {
+    std::unique_lock<std::mutex> lck(statsAcces);
+    progress=prog;
+}
+
 

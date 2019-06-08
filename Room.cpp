@@ -3,10 +3,11 @@
 //
 
 #include "Room.h"
+#include "ConsoleManager.h"
+
 using namespace std;
-void Room::addNewCreature(Creature *creature) {
-    creatureList.push_back(creature);
-}
+
+
 
 Room::Room() {}
 
@@ -15,9 +16,14 @@ void Room::print() {
 }
 
 bool Room::Use(Creature *creature) {
-    unique_lock<std::mutex> lck(RoomAcces,std::defer_lock);
+    unique_lock<std::mutex> lck(RoomAcces,defer_lock);
     bool succes = lck.try_lock();
-    if(succes) RoomEfect(creature);
+    if(succes) {
+        this->lck=&lck;
 
+        creature->setRoom(this);
+        RoomEfect(creature);
+
+    }
     return succes;
 }

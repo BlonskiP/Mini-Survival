@@ -8,30 +8,40 @@
 
 #include <thread>
 #include "Room.h"
-
+#include <condition_variable>
 using namespace std;
 class Room;
 class Creature {
 private:
-    const int maxHunger=100;
-    const int maxEnergy=100;
-    string name;
+
+
     int hunger;
     int energy;
     int x;
     int y;
-    bool isAlive;
+
     Room *room;
 public:
+    const int maxHunger=100;
+    const int maxEnergy=100;
+    condition_variable cvCreatureWorking;
+    int progress =0;
+    string name;
+    mutex statsAcces;
     Creature(string name);
     thread creatureThread;
     int getHunger();
     int getEnergy();
+    int getProgress();
     void changeHungerBy(int change);
     void changeEnergyBy(int change);
+    void setProgress(int prog);
     bool CheckIfIsAlive();
+    bool isAlive;
+    void setRoom(Room *room);
     void Survive();
     void print();
+    Room * getRoom();
 
 
 };
