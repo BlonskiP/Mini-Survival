@@ -17,6 +17,7 @@ private:
     thread timeThread;
     void printAllRooms();
     void printAllCreatures();
+    void printCorridors();
 public:
     ConsoleManager();
     static vector<Creature*> creatureList;

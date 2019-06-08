@@ -17,19 +17,21 @@ private:
 
     int hunger;
     int energy;
-    int x;
-    int y;
+
 
     Room *room;
 public:
+    int x;
+    int y;
     const int maxHunger=100;
     const int maxEnergy=100;
     condition_variable cvCreatureWorking;
     int progress =0;
     string name;
     mutex statsAcces;
-    Creature(string name);
+    Creature(string name, char symbol);
     thread creatureThread;
+    char symbol='X';
     int getHunger();
     int getEnergy();
     int getProgress();

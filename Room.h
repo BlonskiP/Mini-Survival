@@ -8,14 +8,30 @@
 #include <vector>
 #include "Creature.h"
 #include <condition_variable>
-
+#include <ncurses.h>
 using namespace std;
+struct point{
+    int x;
+    int y;
+    point(int x,int y)
+    {
+        this->x=x;
+        this->y=y;
+    }
+};
 class Creature;
 class Room {
 private:
 public:
     Room();
+// left corner
+    int x;
+    int y;
+    int sizeX;
+    int sizeY;
     string roomName="MissingName";
+    vector<point*> pathFromWaitingRoom;
+    void GoToRoom(Creature *creature, bool dir);
     mutex RoomAcces;
     condition_variable accesed;
     unique_lock<mutex> *lck;

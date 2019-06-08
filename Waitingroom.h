@@ -13,6 +13,7 @@ public:
     void RoomEfect(Creature *creature) override;
     Waitingroom();
     bool Use(Creature *creature);
+
 };
 
 

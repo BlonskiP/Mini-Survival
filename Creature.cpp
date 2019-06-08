@@ -43,12 +43,15 @@ bool Creature::CheckIfIsAlive() {
     return isAlive;
 }
 
-Creature::Creature(string name) {
+Creature::Creature(string name, char symbol) {
 
     isAlive=true;
     this->name=name;
+    this->symbol=symbol;
     hunger=50;
     energy=50;
+    x=25;
+    y=10;
     creatureThread=thread(&Creature::Survive,this);
     Room *& newRoom=ConsoleManager::roomList[0];
     setRoom(newRoom);

@@ -10,11 +10,11 @@ void Bedroom::RoomEfect(Creature *creature) {
     int prog=0;
     creature->setProgress(prog);
     if(creature->getEnergy()<75)
-        while((creature->getEnergy()<creature->maxEnergy || creature->getProgress()<10) && creature->isAlive )
+        while((creature->getEnergy()<creature->maxEnergy && creature->getProgress()<5) && creature->isAlive )
         {
             // accesed.wait_for(*lck,std::chrono::seconds(1));
             prog++;
-            sleep(1);
+            usleep(500000); // 0.5sec
             creature->setProgress(prog);
             creature->changeEnergyBy(5);
         }
@@ -22,4 +22,14 @@ void Bedroom::RoomEfect(Creature *creature) {
 
 Bedroom::Bedroom() {
     this->roomName="Bedroom";
+    x=35;
+    y=5;
+    sizeX=7;
+    sizeY=4;
+    this->pathFromWaitingRoom.push_back(new point(25,10));
+    this->pathFromWaitingRoom.push_back(new point(25,9));
+    for(int i=0;i<13;i++){
+        this->pathFromWaitingRoom.push_back(new point(25+i,8));
+    }
+    this->pathFromWaitingRoom.push_back(new point(25+12,7));
 }
