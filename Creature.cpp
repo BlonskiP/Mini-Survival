@@ -62,7 +62,7 @@ void Creature::Survive() {
     while(isAlive && ConsoleManager::survivalIsActive){
         for(int i=0;i<ConsoleManager::roomList.size();i++){
             ConsoleManager::roomList[i]->Use(this);
-        }
+}
     }
 }
 

@@ -29,9 +29,9 @@ void Kitchen::RoomEfect(Creature *creature) {
     {
         // accesed.wait_for(*lck,std::chrono::seconds(1));
         prog++;
-        usleep(500000);
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
         creature->setProgress(prog);
-        if(Garden::food>0) {
+        if(Garden::getFood()>0) {
             int food = Garden::eatFood();
             creature->changeHungerBy(food);
 

@@ -16,7 +16,7 @@ void Garden::RoomEfect(Creature *creature) {
         prog++;
         creature->setProgress(prog);
         Garden::gatherFood(creature);
-        usleep(600000);
+        std::this_thread::sleep_for(std::chrono::milliseconds(300));
         if(creature->getHunger()<15 || creature->getEnergy()<15)return;
 
     }

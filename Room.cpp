@@ -57,14 +57,14 @@ void Room::GoToRoom(Creature *creature, bool dir) {
     {
         creature->y=pathFromWaitingRoom[i]->y;
         creature->x=pathFromWaitingRoom[i]->x;
-        usleep(50000);
+        std::this_thread::sleep_for(std::chrono::microseconds(50000));
     }
     else
     for(int i=(int)pathFromWaitingRoom.size()-1;i>0;i--)
     {
         creature->y=pathFromWaitingRoom[i]->y;
         creature->x=pathFromWaitingRoom[i]->x;
-        usleep(50000);
+        std::this_thread::sleep_for(std::chrono::microseconds(50000));
     }
 
 

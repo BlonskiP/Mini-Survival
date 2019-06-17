@@ -29,10 +29,10 @@ ConsoleManager::ConsoleManager() {
     //CreateCreatures//
     ConsoleManager::creatureList.push_back(new Creature("Janek",'$'));
     ConsoleManager::creatureList.push_back(new Creature("Baltazar",'&'));
-    ConsoleManager::creatureList.push_back(new Creature("Bartłomiej",'*'));
+    ConsoleManager::creatureList.push_back(new Creature("Bartlomiej",'*'));
     ConsoleManager::creatureList.push_back(new Creature("Mikołaj",'O'));
-    ConsoleManager::creatureList.push_back(new Creature("Pawełek",'K'));
-    ConsoleManager::creatureList.push_back(new Creature("Michał",'M'));
+    ConsoleManager::creatureList.push_back(new Creature("Pawelek",'K'));
+    ConsoleManager::creatureList.push_back(new Creature("Michal",'M'));
     ConsoleManager::creatureList.push_back(new Creature("Mateusz",'?'));
     ConsoleManager::creatureList.push_back(new Creature("Stefan",'!'));
     ConsoleManager::creatureList.push_back(new Creature("Janusz",'%'));
@@ -68,6 +68,8 @@ void ConsoleManager::printCreatureStats() {
         move(y+i,0);
         Creature *& creature = ConsoleManager::creatureList[i];
         string name= creature->name;
+        addch(creature->symbol);
+        addch(' ');
         addstr(name.c_str());
         move(y+i,10);
         Room * room = creature->getRoom();
@@ -88,7 +90,7 @@ void ConsoleManager::printCreatureStats() {
 }
 
 void ConsoleManager::reprint() {
-    usleep(40000);
+    std::this_thread::sleep_for(std::chrono::milliseconds(16));
     erase();
     printAllRooms();
     printCorridors();

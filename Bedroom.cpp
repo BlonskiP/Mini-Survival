@@ -14,7 +14,7 @@ void Bedroom::RoomEfect(Creature *creature) {
         {
             // accesed.wait_for(*lck,std::chrono::seconds(1));
             prog++;
-            usleep(500000); // 0.5sec
+            std::this_thread::sleep_for(std::chrono::milliseconds(300));
             creature->setProgress(prog);
             creature->changeEnergyBy(5);
         }

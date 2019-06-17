@@ -7,6 +7,7 @@
 void Waitingroom::RoomEfect(Creature *creature) {
     creature->progress=0;
     creature->setRoom(this);
+    std::this_thread::sleep_for(std::chrono::milliseconds(16));
 }
 
 Waitingroom::Waitingroom() {
@@ -15,7 +16,6 @@ Waitingroom::Waitingroom() {
     y=5;
     sizeX=10;
     sizeY=10;
-
 }
 
 bool Waitingroom::Use(Creature *creature) {
